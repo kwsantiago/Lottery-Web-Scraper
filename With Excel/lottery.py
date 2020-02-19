@@ -71,7 +71,7 @@ print("\n1st Prize: {}".format(Winners1[0]+Winners1[1]+Winners1[2]+Winners1[3]+W
 print("\n2nd Prize: {}".format(Winners2[0]+Winners2[1]+Winners2[2]+Winners2[3]+Winners2[4]))
 print("\n2nd Prize: {}".format(Winners3[0]+Winners3[1]+Winners3[2]+Winners3[3]+Winners3[4]))
 
-# send to excel
+# send to .xlsx
 workbook = xlsxwriter.Workbook('output.xlsx')
 worksheet = workbook.add_worksheet()
 row = 0
