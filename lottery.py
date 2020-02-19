@@ -31,9 +31,6 @@ images1 = lands_lot_soup.find('span', id='ctl00_ContentPlaceHolder1_lblWinning1'
 images2 = lands_lot_soup.find('span', id='ctl00_ContentPlaceHolder1_lblWinning2')
 images3 = lands_lot_soup.find('span', id='ctl00_ContentPlaceHolder1_lblWinning3')
 
-# bad characters
-bad_chars = ['../images/black/','.jpg']
-
 Winners1 = []
 for img in images1.find_all('img'):
         Winners1.append(img['src'])
@@ -45,6 +42,9 @@ for img in images2.find_all('img'):
 Winners3 = []
 for img in images3.find_all('img'):
         Winners3.append(img['src'])
+
+# bad characters
+bad_chars = ['../images/black/','.jpg']
 
 # remove bad characters
 for i in bad_chars: 
