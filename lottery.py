@@ -7,9 +7,6 @@ lands_lot_page = requests.get("http://landsloterij.org/eng/index.aspx")
 
 robbie_soup = BeautifulSoup(robbie_page.content, 'html.parser')
 lands_lot_soup = BeautifulSoup(lands_lot_page.content, 'html.parser')
-
-print("Robbie's Lottery Winners :: " + robbie_soup.find('div', class_='title wegadnumber').text)
-
 robbie_drawing = robbie_soup.find('div', class_='drawings four').text
 
 images1 = lands_lot_soup.find('span', id='ctl00_ContentPlaceHolder1_lblWinning1')
@@ -62,12 +59,14 @@ def populate_lands_winners(list1,list2,list3):
         return  
 
 def print_robbies_winners(winners):
+        print("Robbie's Lottery Winners :: " + robbie_soup.find('div', class_='title wegadnumber').text)
         print("\n1st Prize: {}".format(winners[0]+winners[1]+winners[2]+winners[3]))
         print("\n2nd Prize: {}".format(winners[4]+winners[5]+winners[6]+winners[7]))
         print("\n3rd Prize: {}".format(winners[8]+winners[9]+winners[10]+winners[11]))
         return
 
 def print_lands_lot_winners(winners1,winners2,winners3):
+        print("---------------------------\nLandsloterij Winners")
         print("\n1st Prize: {}".format(winners1[0]+winners1[1]+winners1[2]+winners1[3]+winners1[4]))
         print("\n2nd Prize: {}".format(winners2[0]+winners2[1]+winners2[2]+winners2[3]+winners2[4]))
         print("\n3rd Prize: {}".format(winners3[0]+winners3[1]+winners3[2]+winners3[3]+winners3[4]))
@@ -75,7 +74,6 @@ def print_lands_lot_winners(winners1,winners2,winners3):
 
 populate_robbies_winners(robbies_winners)
 print_robbies_winners(robbies_winners)
-print("---------------------------\nLandsloterij Winners")
 populate_lands_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 print_lands_lot_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 
