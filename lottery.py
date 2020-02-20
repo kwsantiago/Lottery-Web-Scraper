@@ -36,32 +36,38 @@ def removeElements(list):
         list.pop(len(robbies_winners)-1)
         return
 
-def populate_lands_winners1(list):
+def populate_lands_winners(list1,list2,list3):
         for img in images1.find_all('img'):
-                list.append(img['src'])
-        return
-
-def populate_lands_winners2(list):
+                list1.append(img['src'])
         for img in images2.find_all('img'):
-                list.append(img['src'])
-        return
-
-def populate_lands_winners3(list):
+                list2.append(img['src'])
         for img in images3.find_all('img'):
-                list.append(img['src'])
+                list3.append(img['src'])
         return
 
 # bad characters
 bad_chars = ['../images/black/','.jpg']
 
 # remove bad characters
-def removeBadChars(list):
+def removeBadChars(list1,list2,list3):
         for i in bad_chars: 
-                list[0] = list[0].replace(i,'')
-                list[1] = list[1].replace(i,'')
-                list[2] = list[2].replace(i,'')
-                list[3] = list[3].replace(i,'')
-                list[4] = list[4].replace(i,'')
+                list1[0] = list1[0].replace(i,'')
+                list1[1] = list1[1].replace(i,'')
+                list1[2] = list1[2].replace(i,'')
+                list1[3] = list1[3].replace(i,'')
+                list1[4] = list1[4].replace(i,'')
+        for i in bad_chars: 
+                list2[0] = list2[0].replace(i,'')
+                list2[1] = list2[1].replace(i,'')
+                list2[2] = list2[2].replace(i,'')
+                list2[3] = list2[3].replace(i,'')
+                list2[4] = list2[4].replace(i,'')
+        for i in bad_chars: 
+                list3[0] = list3[0].replace(i,'')
+                list3[1] = list3[1].replace(i,'')
+                list3[2] = list3[2].replace(i,'')
+                list3[3] = list3[3].replace(i,'')
+                list3[4] = list3[4].replace(i,'')
         return
 
 def print_robbies_winners(winners):
@@ -70,23 +76,19 @@ def print_robbies_winners(winners):
         print("\n3rd Prize: {}".format(winners[8]+winners[9]+winners[10]+winners[11]))
         return
 
-def print_lands_lot_winners(winners):
-        print("\n1st Prize: {}".format(winners[0]+winners[1]+winners[2]+winners[3]+winners[4]))
+def print_lands_lot_winners(winners1,winners2,winners3):
+        print("\n1st Prize: {}".format(winners1[0]+winners1[1]+winners1[2]+winners1[3]+winners1[4]))
+        print("\n2nd Prize: {}".format(winners2[0]+winners2[1]+winners2[2]+winners2[3]+winners2[4]))
+        print("\n3rd Prize: {}".format(winners3[0]+winners3[1]+winners3[2]+winners3[3]+winners3[4]))
         return  
 
 populate_robbies_winners(robbies_winners)
 removeElements(robbies_winners)
 print_robbies_winners(robbies_winners)
 print("---------------------------\nLandsloterij Winners")
-populate_lands_winners1(lands_lot_winners1)
-populate_lands_winners2(lands_lot_winners2)
-populate_lands_winners3(lands_lot_winners3)
-removeBadChars(lands_lot_winners1)
-removeBadChars(lands_lot_winners2)
-removeBadChars(lands_lot_winners3)      
-print_lands_lot_winners(lands_lot_winners1)
-print_lands_lot_winners(lands_lot_winners2)
-print_lands_lot_winners(lands_lot_winners3)
+populate_lands_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
+removeBadChars(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)      
+print_lands_lot_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 
 # send to .csv
 workbook = xlsxwriter.Workbook('output.csv')
