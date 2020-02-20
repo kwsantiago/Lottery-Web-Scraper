@@ -60,16 +60,16 @@ def populate_lands_winners(list1,list2,list3):
 
 def print_robbies_winners(winners):
         print("Robbie's Lottery Winners :: " + robbie_soup.find('div', class_='title wegadnumber').text)
-        print("\n1st Prize: {}".format(winners[0]+winners[1]+winners[2]+winners[3]))
-        print("\n2nd Prize: {}".format(winners[4]+winners[5]+winners[6]+winners[7]))
-        print("\n3rd Prize: {}".format(winners[8]+winners[9]+winners[10]+winners[11]))
+        print("-1st Prize: {}".format(winners[0]+winners[1]+winners[2]+winners[3]))
+        print("-2nd Prize: {}".format(winners[4]+winners[5]+winners[6]+winners[7]))
+        print("-3rd Prize: {}".format(winners[8]+winners[9]+winners[10]+winners[11]))
         return
 
 def print_lands_lot_winners(winners1,winners2,winners3):
-        print("---------------------------\nLandsloterij Winners")
-        print("\n1st Prize: {}".format(winners1[0]+winners1[1]+winners1[2]+winners1[3]+winners1[4]))
-        print("\n2nd Prize: {}".format(winners2[0]+winners2[1]+winners2[2]+winners2[3]+winners2[4]))
-        print("\n3rd Prize: {}".format(winners3[0]+winners3[1]+winners3[2]+winners3[3]+winners3[4]))
+        print("\nLandsloterij Winners")
+        print("-1st Prize: {}".format(winners1[0]+winners1[1]+winners1[2]+winners1[3]+winners1[4]))
+        print("-2nd Prize: {}".format(winners2[0]+winners2[1]+winners2[2]+winners2[3]+winners2[4]))
+        print("-3rd Prize: {}".format(winners3[0]+winners3[1]+winners3[2]+winners3[3]+winners3[4]))
         return  
 
 populate_robbies_winners(robbies_winners)
