@@ -20,21 +20,18 @@ robbies_winners = []
 lands_lot_winners1 = []
 lands_lot_winners2 = []
 lands_lot_winners3 = []
+bad_chars = ['../images/black/','.jpg']
 
 def populate_robbies_winners(list):
         for x in robbie_drawing:
                 list.append(x)
-        return
-
-# remove unncecessary elements
-def removeElements(list):
+        # remove unncecessary elements
         for x in list:
                 list.remove("\n") 
-        
         list.pop(11)  
         list.pop(len(robbies_winners)-2)
         list.pop(len(robbies_winners)-1)
-        return
+        return 
 
 def populate_lands_winners(list1,list2,list3):
         for img in images1.find_all('img'):
@@ -43,13 +40,7 @@ def populate_lands_winners(list1,list2,list3):
                 list2.append(img['src'])
         for img in images3.find_all('img'):
                 list3.append(img['src'])
-        return
-
-# bad characters
-bad_chars = ['../images/black/','.jpg']
-
-# remove bad characters
-def removeBadChars(list1,list2,list3):
+        # remove bad characters
         for i in bad_chars: 
                 list1[0] = list1[0].replace(i,'')
                 list1[1] = list1[1].replace(i,'')
@@ -68,7 +59,7 @@ def removeBadChars(list1,list2,list3):
                 list3[2] = list3[2].replace(i,'')
                 list3[3] = list3[3].replace(i,'')
                 list3[4] = list3[4].replace(i,'')
-        return
+        return  
 
 def print_robbies_winners(winners):
         print("\n1st Prize: {}".format(winners[0]+winners[1]+winners[2]+winners[3]))
@@ -83,11 +74,9 @@ def print_lands_lot_winners(winners1,winners2,winners3):
         return  
 
 populate_robbies_winners(robbies_winners)
-removeElements(robbies_winners)
 print_robbies_winners(robbies_winners)
 print("---------------------------\nLandsloterij Winners")
 populate_lands_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
-removeBadChars(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)      
 print_lands_lot_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 
 # send to .csv
