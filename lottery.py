@@ -73,21 +73,28 @@ def print_lands_lot_winners(winners1,winners2,winners3):
         print("-3rd Prize: {}".format(winners3[0]+winners3[1]+winners3[2]+winners3[3]+winners3[4]))
         return  
 
+def to_csv(path):
+        # send to .csv in /bin/ directory
+        workbook = xlsxwriter.Workbook(path)
+        worksheet = workbook.add_worksheet()
+        row = 0
+        array = [["Robbie's Winners",(robbies_winners[0]+robbies_winners[1]+robbies_winners[2]+robbies_winners[3]),(robbies_winners[4]+robbies_winners[5]+robbies_winners[6]+robbies_winners[7]),(robbies_winners[8]+robbies_winners[9]+robbies_winners[10]+robbies_winners[11])],
+                ['Landsloterij Winners',(lands_lot_winners1[0]+lands_lot_winners1[1]+lands_lot_winners1[2]+lands_lot_winners1[3]+lands_lot_winners1[4]),(lands_lot_winners2[0]+lands_lot_winners2[1]+lands_lot_winners2[2]+lands_lot_winners2[3]+lands_lot_winners2[4]),(lands_lot_winners3[0]+lands_lot_winners3[1]+lands_lot_winners3[2]+lands_lot_winners3[3]+lands_lot_winners3[4])]]
+
+        for col, data in enumerate(array):
+                worksheet.write_column(row, col, data)
+
+        workbook.close()
+
 populate_robbies_winners(robbies_winners)
 print_robbies_winners(robbies_winners)
 populate_lands_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 print_lands_lot_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 
-# send to .csv in home directory
 path = os.path.join(os.path.expanduser('~/bin/output.csv'))
-workbook = xlsxwriter.Workbook(path)
-worksheet = workbook.add_worksheet()
-row = 0
-array = [["Robbie's Winners",(robbies_winners[0]+robbies_winners[1]+robbies_winners[2]+robbies_winners[3]),(robbies_winners[4]+robbies_winners[5]+robbies_winners[6]+robbies_winners[7]),(robbies_winners[8]+robbies_winners[9]+robbies_winners[10]+robbies_winners[11])],
-         ['Landsloterij Winners',(lands_lot_winners1[0]+lands_lot_winners1[1]+lands_lot_winners1[2]+lands_lot_winners1[3]+lands_lot_winners1[4]),(lands_lot_winners2[0]+lands_lot_winners2[1]+lands_lot_winners2[2]+lands_lot_winners2[3]+lands_lot_winners2[4]),(lands_lot_winners3[0]+lands_lot_winners3[1]+lands_lot_winners3[2]+lands_lot_winners3[3]+lands_lot_winners3[4])]]
+to_csv(path)
 
-for col, data in enumerate(array):
-    worksheet.write_column(row, col, data)
 
-workbook.close()
+
+
 
