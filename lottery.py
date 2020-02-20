@@ -1,6 +1,7 @@
 import requests
 import xlsxwriter
 from bs4 import BeautifulSoup
+import os
 
 robbie_page = requests.get("http://www.robbieslottery.com/")
 lands_lot_page = requests.get("http://landsloterij.org/eng/index.aspx")
@@ -77,8 +78,9 @@ print_robbies_winners(robbies_winners)
 populate_lands_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 print_lands_lot_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 
-# send to .csv
-workbook = xlsxwriter.Workbook('output.csv')
+# send to .csv in home directory
+path = os.path.join(os.path.expanduser('~/bin/output.csv'))
+workbook = xlsxwriter.Workbook(path)
 worksheet = workbook.add_worksheet()
 row = 0
 array = [["Robbie's Winners",(robbies_winners[0]+robbies_winners[1]+robbies_winners[2]+robbies_winners[3]),(robbies_winners[4]+robbies_winners[5]+robbies_winners[6]+robbies_winners[7]),(robbies_winners[8]+robbies_winners[9]+robbies_winners[10]+robbies_winners[11])],
@@ -88,3 +90,4 @@ for col, data in enumerate(array):
     worksheet.write_column(row, col, data)
 
 workbook.close()
+
