@@ -73,8 +73,8 @@ def print_lands_lot_winners(winners1,winners2,winners3):
         return  
 
 def array2htmltable(data):
-    q = "<table>\n"
-    for i in [(data[0:1], 'th'), (data[1:], 'td')]:
+    q = '<table align="center" border="1">\n'
+    for i in [(data[0:1], 'td'), (data[1:], 'td')]:
         q += "\n".join(
             [
                 "<tr>%s</tr>" % str(_mm) 
@@ -103,8 +103,8 @@ def main():
         populate_lands_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
         print_lands_lot_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 
-        array = [["Robbie's Winners",(robbies_winners[0]+robbies_winners[1]+robbies_winners[2]+robbies_winners[3]),(robbies_winners[4]+robbies_winners[5]+robbies_winners[6]+robbies_winners[7]),(robbies_winners[8]+robbies_winners[9]+robbies_winners[10]+robbies_winners[11])],
-                        ['Landsloterij Winners',(lands_lot_winners1[0]+lands_lot_winners1[1]+lands_lot_winners1[2]+lands_lot_winners1[3]+lands_lot_winners1[4]),(lands_lot_winners2[0]+lands_lot_winners2[1]+lands_lot_winners2[2]+lands_lot_winners2[3]+lands_lot_winners2[4]),(lands_lot_winners3[0]+lands_lot_winners3[1]+lands_lot_winners3[2]+lands_lot_winners3[3]+lands_lot_winners3[4])]]
+        array = [["Robbie's Winners",("1: "+ robbies_winners[0]+robbies_winners[1]+robbies_winners[2]+robbies_winners[3]),("2: " + robbies_winners[4]+robbies_winners[5]+robbies_winners[6]+robbies_winners[7]),("3: " + robbies_winners[8]+robbies_winners[9]+robbies_winners[10]+robbies_winners[11])],
+                        ['Landsloterij Winners',("1: " + lands_lot_winners1[0]+lands_lot_winners1[1]+lands_lot_winners1[2]+lands_lot_winners1[3]+lands_lot_winners1[4]),("2: " + lands_lot_winners2[0]+lands_lot_winners2[1]+lands_lot_winners2[2]+lands_lot_winners2[3]+lands_lot_winners2[4]),("3: " + lands_lot_winners3[0]+lands_lot_winners3[1]+lands_lot_winners3[2]+lands_lot_winners3[3]+lands_lot_winners3[4])]]
         to_html(array)
         return
 
