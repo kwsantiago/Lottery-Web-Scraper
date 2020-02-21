@@ -2,6 +2,7 @@ import requests
 import xlsxwriter
 from bs4 import BeautifulSoup
 import os
+import pandas as pd
 
 robbie_page = requests.get("http://www.robbieslottery.com/")
 lands_lot_page = requests.get("http://landsloterij.org/eng/index.aspx")
@@ -73,28 +74,44 @@ def print_lands_lot_winners(winners1,winners2,winners3):
         print("-3rd Prize: {}".format(winners3[0]+winners3[1]+winners3[2]+winners3[3]+winners3[4]))
         return  
 
-def to_csv(path):
-        # send to .csv in /bin/ directory
-        workbook = xlsxwriter.Workbook(path)
-        worksheet = workbook.add_worksheet()
-        row = 0
-        array = [["Robbie's Winners",(robbies_winners[0]+robbies_winners[1]+robbies_winners[2]+robbies_winners[3]),(robbies_winners[4]+robbies_winners[5]+robbies_winners[6]+robbies_winners[7]),(robbies_winners[8]+robbies_winners[9]+robbies_winners[10]+robbies_winners[11])],
-                ['Landsloterij Winners',(lands_lot_winners1[0]+lands_lot_winners1[1]+lands_lot_winners1[2]+lands_lot_winners1[3]+lands_lot_winners1[4]),(lands_lot_winners2[0]+lands_lot_winners2[1]+lands_lot_winners2[2]+lands_lot_winners2[3]+lands_lot_winners2[4]),(lands_lot_winners3[0]+lands_lot_winners3[1]+lands_lot_winners3[2]+lands_lot_winners3[3]+lands_lot_winners3[4])]]
+def array2htmltable(data):
+    q = "<table>\n"
+    for i in [(data[0:1], 'th'), (data[1:], 'td')]:
+        q += "\n".join(
+            [
+                "<tr>%s</tr>" % str(_mm) 
+                for _mm in [
+                    "".join(
+                        [
+                            "<%s>%s</%s>" % (i[1], str(_q), i[1]) 
+                            for _q in _m
+                        ]
+                    ) for _m in i[0]
+                ] 
+            ])+"\n"
+    q += "</table>"
+    return q
 
-        for col, data in enumerate(array):
-                worksheet.write_column(row, col, data)
-
-        workbook.close()
+def to_html(array):
+        html_str = array2htmltable(array)
+        Html_file= open("/var/www/html/output.html","w")
+        Html_file.write(html_str)
+        Html_file.close()
+        return
 
 populate_robbies_winners(robbies_winners)
 print_robbies_winners(robbies_winners)
 populate_lands_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 print_lands_lot_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
 
-path = os.path.join(os.path.expanduser('~/bin/output.csv'))
-to_csv(path)
+array = [["Robbie's Winners",(robbies_winners[0]+robbies_winners[1]+robbies_winners[2]+robbies_winners[3]),(robbies_winners[4]+robbies_winners[5]+robbies_winners[6]+robbies_winners[7]),(robbies_winners[8]+robbies_winners[9]+robbies_winners[10]+robbies_winners[11])],
+                ['Landsloterij Winners',(lands_lot_winners1[0]+lands_lot_winners1[1]+lands_lot_winners1[2]+lands_lot_winners1[3]+lands_lot_winners1[4]),(lands_lot_winners2[0]+lands_lot_winners2[1]+lands_lot_winners2[2]+lands_lot_winners2[3]+lands_lot_winners2[4]),(lands_lot_winners3[0]+lands_lot_winners3[1]+lands_lot_winners3[2]+lands_lot_winners3[3]+lands_lot_winners3[4])]]
+to_html(array)
 
 
+
+#path = os.path.join(os.path.expanduser('/var/www/html'))
+# send to html file in /var/www/html
 
 
 
