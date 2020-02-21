@@ -108,10 +108,3 @@ array = [["Robbie's Winners",(robbies_winners[0]+robbies_winners[1]+robbies_winn
                 ['Landsloterij Winners',(lands_lot_winners1[0]+lands_lot_winners1[1]+lands_lot_winners1[2]+lands_lot_winners1[3]+lands_lot_winners1[4]),(lands_lot_winners2[0]+lands_lot_winners2[1]+lands_lot_winners2[2]+lands_lot_winners2[3]+lands_lot_winners2[4]),(lands_lot_winners3[0]+lands_lot_winners3[1]+lands_lot_winners3[2]+lands_lot_winners3[3]+lands_lot_winners3[4])]]
 to_html(array)
 
-
-
-#path = os.path.join(os.path.expanduser('/var/www/html'))
-# send to html file in /var/www/html
-
-
-
