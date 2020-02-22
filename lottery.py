@@ -73,8 +73,8 @@ def print_lands_lot_winners(winners1,winners2,winners3):
         return  
 
 def array2htmltable(data):
-    q = '<table align="center" border="1">\n'
-    for i in [(data[0:1], 'td'), (data[1:], 'td')]:
+    q = '<style>h1 {left: 0;line-height: 200px;margin-top: -100px;position: absolute;text-align: center;top: 50%;width: 100%; }</style><h1><table align="center" border="1">\n'
+    for i in [(data[0:], 'td')]:
         q += "\n".join(
             [
                 "<tr>%s</tr>" % str(_mm) 
@@ -87,7 +87,7 @@ def array2htmltable(data):
                     ) for _m in i[0]
                 ] 
             ])+"\n"
-    q += "</table>"
+    q += "</table></h1>"
     return q
 
 def to_html(array):
@@ -109,4 +109,3 @@ def main():
         return
 
 main()
-
