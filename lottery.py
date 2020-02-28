@@ -1,76 +1,67 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import re
 
-robbie_page = requests.get("http://www.robbieslottery.com/")
-lands_lot_page = requests.get("http://landsloterij.org/eng/index.aspx")
+def getRobbieData():
+        robbie_page = requests.get("http://www.robbieslottery.com/")
+        robbie_soup = BeautifulSoup(robbie_page.content, 'html.parser')
+        robbie_drawing = robbie_soup.find('div', class_='drawings four').text
+        return robbie_drawing
 
-robbie_soup = BeautifulSoup(robbie_page.content, 'html.parser')
-lands_lot_soup = BeautifulSoup(lands_lot_page.content, 'html.parser')
-robbie_drawing = robbie_soup.find('div', class_='drawings four').text
+def getLandsData():
+        lands_lot_page = requests.get("http://landsloterij.org/eng/index.aspx")
+        lands_lot_soup = BeautifulSoup(lands_lot_page.content, 'html.parser')
+        return lands_lot_soup
 
-images1 = lands_lot_soup.find('span', id='ctl00_ContentPlaceHolder1_lblWinning1')
-images2 = lands_lot_soup.find('span', id='ctl00_ContentPlaceHolder1_lblWinning2')
-images3 = lands_lot_soup.find('span', id='ctl00_ContentPlaceHolder1_lblWinning3')
+def getLandsWinners1():
+        lands_lot_soup = getLandsData()
+        images1 = lands_lot_soup.find('span', id='ctl00_ContentPlaceHolder1_lblWinning1')
+        return str(images1)
 
-robbies_winners = []
-lands_lot_winners1 = []
-lands_lot_winners2 = []
-lands_lot_winners3 = []
-bad_chars = ['../images/black/','.jpg']
+def getLandsWinners2():
+        lands_lot_soup = getLandsData()
+        images2 = lands_lot_soup.find('span', id='ctl00_ContentPlaceHolder1_lblWinning2')
+        return str(images2)
 
-def populate_robbies_winners(list):
-        for x in robbie_drawing:
-                list.append(x)
-        # remove unncecessary elements
-        for x in list:
-                list.remove("\n") 
-        list.pop(11)  
-        list.pop(len(robbies_winners)-2)
-        list.pop(len(robbies_winners)-1)
-        return 
+def getLandsWinners3():
+        lands_lot_soup = getLandsData()
+        images3 = lands_lot_soup.find('span', id='ctl00_ContentPlaceHolder1_lblWinning3')
+        return str(images3)
 
-def populate_lands_winners(list1,list2,list3):
-        for img in images1.find_all('img'):
-                list1.append(img['src'])
-        for img in images2.find_all('img'):
-                list2.append(img['src'])
-        for img in images3.find_all('img'):
-                list3.append(img['src'])
-        # remove bad characters
-        for i in bad_chars: 
-                list1[0] = list1[0].replace(i,'')
-                list1[1] = list1[1].replace(i,'')
-                list1[2] = list1[2].replace(i,'')
-                list1[3] = list1[3].replace(i,'')
-                list1[4] = list1[4].replace(i,'')
-        for i in bad_chars: 
-                list2[0] = list2[0].replace(i,'')
-                list2[1] = list2[1].replace(i,'')
-                list2[2] = list2[2].replace(i,'')
-                list2[3] = list2[3].replace(i,'')
-                list2[4] = list2[4].replace(i,'')
-        for i in bad_chars: 
-                list3[0] = list3[0].replace(i,'')
-                list3[1] = list3[1].replace(i,'')
-                list3[2] = list3[2].replace(i,'')
-                list3[3] = list3[3].replace(i,'')
-                list3[4] = list3[4].replace(i,'')
-        return  
-
-def print_robbies_winners(winners):
-        print("Robbie's Lottery Winners :: " + robbie_soup.find('div', class_='title wegadnumber').text)
-        print("-1st Prize: {}".format(winners[0]+winners[1]+winners[2]+winners[3]))
-        print("-2nd Prize: {}".format(winners[4]+winners[5]+winners[6]+winners[7]))
-        print("-3rd Prize: {}".format(winners[8]+winners[9]+winners[10]+winners[11]))
+def print_lands_winners1():
+        images1 = getLandsWinners1()
+        winners1 = re.sub('[a-zA-Z..<>/"=_ ]','', images1)
+        print("-1st Prize: {}".format(winners1[4:9]))
         return
 
-def print_lands_lot_winners(winners1,winners2,winners3):
+def print_lands_winners2():
+        images2 = getLandsWinners2()
+        winners2 = re.sub('[a-zA-Z..<>/"=_ ]','', images2)
+        print("-1st Prize: {}".format(winners2[4:9]))
+        return
+
+def print_lands_winners3():
+        images3 = getLandsWinners3()
+        winners3 = re.sub('[a-zA-Z..<>/"=_ ]','', images3)
+        print("-1st Prize: {}".format(winners3[4:9]))
+        return
+
+def print_robbies_winners():
+        robbie_drawing = getRobbieData()
+        winners = re.sub('[\n]','', robbie_drawing)
+        print("Robbie's Lottery Winners")
+        print("-1st Prize: {}".format(winners[0:4]))
+        print("-2nd Prize: {}".format(winners[5:9]))
+        print("-3rd Prize: {}".format(winners[8:12]))
+        return 
+
+def print_all_lands_winners():
         print("\nLandsloterij Winners")
-        print("-1st Prize: {}".format(winners1[0]+winners1[1]+winners1[2]+winners1[3]+winners1[4]))
-        print("-2nd Prize: {}".format(winners2[0]+winners2[1]+winners2[2]+winners2[3]+winners2[4]))
-        print("-3rd Prize: {}".format(winners3[0]+winners3[1]+winners3[2]+winners3[3]+winners3[4]))
-        return  
+        print_lands_winners1()
+        print_lands_winners2()
+        print_lands_winners3()
+        return
 
 def array2htmltable(data):
     q = '<style>h1 {left: 0;line-height: 200px;margin-top: -100px;position: absolute;text-align: center;top: 50%;width: 100%; }</style><h1><table align="center" border="1">\n'
@@ -90,22 +81,30 @@ def array2htmltable(data):
     q += "</table></h1>"
     return q
 
-def to_html(array):
+def to_html():
+        robbie_drawing = getRobbieData()
+        robbies_winners = re.sub('[\n]','', robbie_drawing)
+        images1 = getLandsWinners1()
+        lands_winners1 = re.sub('[a-zA-Z..<>/"=_ ]','', images1)
+        images2 = getLandsWinners2()
+        lands_winners2 = re.sub('[a-zA-Z..<>/"=_ ]','', images2)
+        images3 = getLandsWinners3()
+        lands_winners3 = re.sub('[a-zA-Z..<>/"=_ ]','', images3)
+
+        array = [["Robbie's Winners",("1: "+ robbies_winners[0:4]),("2: " + robbies_winners[5:9]),("3: " + robbies_winners[8:12])],
+         ['Landsloterij Winners',("1: " + lands_winners1[4:9]),("2: " + lands_winners2[4:9]),("3: " + lands_winners3[4:9])]]
         html_str = array2htmltable(array)
+        print(html_str)
         Html_file= open("/var/www/html/output.html","w")
         Html_file.write(html_str)
         Html_file.close()
         return
 
 def main():
-        populate_robbies_winners(robbies_winners)
-        print_robbies_winners(robbies_winners)
-        populate_lands_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
-        print_lands_lot_winners(lands_lot_winners1,lands_lot_winners2,lands_lot_winners3)
-
-        array = [["Robbie's Winners",("1: "+ robbies_winners[0]+robbies_winners[1]+robbies_winners[2]+robbies_winners[3]),("2: " + robbies_winners[4]+robbies_winners[5]+robbies_winners[6]+robbies_winners[7]),("3: " + robbies_winners[8]+robbies_winners[9]+robbies_winners[10]+robbies_winners[11])],
-                        ['Landsloterij Winners',("1: " + lands_lot_winners1[0]+lands_lot_winners1[1]+lands_lot_winners1[2]+lands_lot_winners1[3]+lands_lot_winners1[4]),("2: " + lands_lot_winners2[0]+lands_lot_winners2[1]+lands_lot_winners2[2]+lands_lot_winners2[3]+lands_lot_winners2[4]),("3: " + lands_lot_winners3[0]+lands_lot_winners3[1]+lands_lot_winners3[2]+lands_lot_winners3[3]+lands_lot_winners3[4])]]
-        to_html(array)
+        print_robbies_winners()
+        print_all_lands_winners()
+        to_html()
         return
 
 main()
+
